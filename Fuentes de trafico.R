@@ -18,13 +18,13 @@ dimensions = c("channelGrouping")
 filters = c("")
 segments = c("")
         
-trimestre1 <- google_analytics(id = id,
+fuentestrafico <- google_analytics(id = id,
                                 start = startdate,
                                 end = enddate,
                                 metrics = metrics,
                                 dimensions = dimensions)
 
-ggplot(trimestre1) +
+ggplot(fuentestrafico) +
         geom_point(aes(x = goal1ConversionRate, y = bouncerate, color = channelGrouping, size = sessions)) +
         scale_size_continuous("sessions", range = c(1,30)) +
         labs(x = "Tasa de conversión (%)", y = "Tasa de rebote (%)")

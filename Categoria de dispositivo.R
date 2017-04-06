@@ -18,13 +18,33 @@ dimensions = c("devicecategory")
 filters = c("")
 segments = c("")
         
-trimestre1 <- google_analytics(id = id,
+categoriadispositivo <- google_analytics(id = id,
                                 start = startdate,
                                 end = enddate,
                                 metrics = metrics,
                                 dimensions = dimensions)
 
-ggplot(trimestre1) +
+ggplot(categoriadispositivo) +
         geom_point(aes(x = goal1ConversionRate, y = bouncerate, color = devicecategory, size = sessions)) +
         scale_size_continuous("sessions", range = c(1,30)) +
         labs(x = "Tasa de conversión (%)", y = "Tasa de rebote (%)")
+
+
+# grafico de sectores
+
+pie(categoriadispositivo$sessions, labels = categoriadispositivo$devicecategory)
+
+# De donde vienen en cada dispositivo (en principio se puede omitir o modificar)
+
+dimensions = c("devicecategory","channelGrouping")
+
+categoriadispositivo2 <- google_analytics(id = id,
+                               start = startdate,
+                               end = enddate,
+                               metrics = metrics,
+                               dimensions = dimensions)
+
+ggplot(categoriadispositivo2) +
+        geom_point(aes(x = goal1ConversionRate, y = bouncerate, size = sessions, color = channelGrouping)) +
+        facet_wrap(~devicecategory) +
+        scale_size_continuous("sessions",range = c(1,30))
